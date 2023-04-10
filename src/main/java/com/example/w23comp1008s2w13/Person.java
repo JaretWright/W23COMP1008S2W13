@@ -17,8 +17,21 @@ public class Person {
         return firstName;
     }
 
+    private String refineName(String name)
+    {
+        name = name.trim();
+        if (name.length()>0)
+            return name.substring(0,1).toUpperCase()+name.substring(1);
+        else
+            throw new IllegalArgumentException("name cannot be empty");
+    }
+
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        firstName = refineName(firstName);
+        if (firstName.matches("[A-Z][a-z]*"))
+            this.firstName = firstName;
+        else
+            throw new IllegalArgumentException("first name must contain 2 or more characters");
     }
 
     public String getLastName() {
@@ -26,7 +39,11 @@ public class Person {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        lastName = refineName(lastName);
+        if (lastName.matches("[A-Z][a-z]*"))
+            this.lastName = lastName;
+        else
+            throw new IllegalArgumentException("last name must contain 2 or more characters");
     }
 
     public String getAddress() {
@@ -42,6 +59,8 @@ public class Person {
     }
 
     public void setDob(LocalDate dob) {
+        if (dob.isAfter(LocalDate.now()))
+            throw new IllegalArgumentException("Date of Birth cannot be in the future");
         this.dob = dob;
     }
 }
