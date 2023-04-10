@@ -1,14 +1,57 @@
 package com.example.w23comp1008s2w13;
 
-public class Student {
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.OptionalDouble;
 
-    /** ideas for attributes of a Student
-     * student number
-     * name
-     * program  - Computer Studies (major)
-     * age - store the date of birth and calculate the age
-     * college **
-     * course / course Code - collection of completed courses (or enrolled in courses)
-     * grade average - better to calculate this from completed courses
-     */
+public class Student extends Person {
+
+    private ArrayList<Grade> grades;
+    private int studentNum;
+
+    public Student(String firstName, String lastName, String address, LocalDate dob, int studentNum) {
+        super(firstName, lastName, address, dob);
+        setStudentNum(studentNum);
+        grades= new ArrayList<>();
+    }
+
+    public ArrayList<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(ArrayList<Grade> grades) {
+        this.grades = grades;
+    }
+
+    public int getStudentNum() {
+        return studentNum;
+    }
+
+    public void setStudentNum(int studentNum) {
+        this.studentNum = studentNum;
+    }
+
+    public void addGrade(Grade newGrade)
+    {
+        grades.add(newGrade);
+    }
+
+    public double getAvgGrade()
+    {
+        if (grades.size()==0)
+            return -1;
+        else
+        {
+            double total = 0.0;
+            for (Grade grade : grades)
+                total += grade.getGrade();
+
+            return total/grades.size();
+        }
+    }
+
+    public String toString()
+    {
+        return String.format("%d-%s",studentNum,super.toString());
+    }
 }
